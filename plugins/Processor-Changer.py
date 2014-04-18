@@ -36,7 +36,9 @@ class Zadow(idaapi.plugin_t):
         idaapi.add_menu_item("Debugger/", "Change Processor to java", "", 0, self.ZadowJava, ())
         idaapi.add_menu_item("Debugger/", "Change Processor to Mips", "", 0, self.ZadowMips, ())
         idaapi.add_menu_item("Debugger/", "Change Processor to Net", "", 0, self.ZadowNet, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to Dalvik", "", 0, self.ZadowDalvik, ())
         idaapi.add_menu_item("Debugger/", "HighLight Calls", "", 0, self.ZadowHigh, ())
+
 
 
     def run(self, arg = 0):
@@ -67,6 +69,9 @@ class Zadow(idaapi.plugin_t):
 
     def ZadowNet(self):
         idc.SetProcessorType('cli', SETPROC_USER)
+
+    def ZadowDalvik(self):
+        idc.SetProcessorType('dalvik', SETPROC_USER)
 
     def ZadowHigh(self):
         from idautils import XrefsFrom
