@@ -47,31 +47,31 @@ class Zadow(idaapi.plugin_t):
         self.AddMenuElements()
 
     def ZadowSpu(self):
-        idc.SetProcessorType('spu', SETPROC_USER)
+        idc.SetProcessorType('spu', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowPpc(self):
-        idc.SetProcessorType('ppc', SETPROC_USER)
+        idc.SetProcessorType('ppc', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowPpc64(self):
-        idc.SetProcessorType('ppc64', SETPROC_USER)
+        idc.SetProcessorType('ppc64', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowArm(self):
-        idc.SetProcessorType('arm', SETPROC_USER)
+        idc.SetProcessorType('arm', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowPc(self):
-        idc.SetProcessorType('pc', SETPROC_USER)
+        idc.SetProcessorType('pc', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowJava(self):
-        idc.SetProcessorType('java', SETPROC_USER)
+        idc.SetProcessorType('java', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowMips(self):
-        idc.SetProcessorType('mips', SETPROC_USER)
+        idc.SetProcessorType('mips', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowNet(self):
-        idc.SetProcessorType('cli', SETPROC_USER)
+        idc.SetProcessorType('cli', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowDalvik(self):
-        idc.SetProcessorType('dalvik', SETPROC_USER)
+        idc.SetProcessorType('dalvik', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowHigh(self):
         from idautils import XrefsFrom
