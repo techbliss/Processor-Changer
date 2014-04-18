@@ -34,7 +34,7 @@ class Zadow(idaapi.plugin_t):
         idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowPc, ())
         idaapi.add_menu_item("Debugger/", "Change Processor to java", "", 0, self.ZadowJava, ())
         idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowMips, ())
-        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowPc, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowHigh, ())
 
     def run(self, arg = 0):
         idaapi.msg("Hombre you are runnig good.\n")
@@ -62,6 +62,26 @@ class Zadow(idaapi.plugin_t):
     def ZadowJava(self):
         idc.SetProcessorType('mips', SETPROC_USER)
 
+    def ZadowHigh(self):
+        from idautils import XrefsFrom
+        from idaapi import fl_CN as call_near, fl_CF as call_far
+        from providers import ida
+
+        provider = ida.IDA()
+
+        startEA = provider.funcStart(provider.currentEA())
+        endEA = provider.funcEnd(provider.currentEA())
+
+        all_addresses = list(provider.iterInstructions(startEA, endEA))
+        all_addresses.extend(provider.iterFuncChunks(startEA))
+        all_addresses = list(set(all_addresses))
+
+        for head in all_addresses:
+            for xref in XrefsFrom(head):
+                if xref.type == call_near or xref.type == call_far:
+                    provider.setColor(head, 0x0000FF)
+
+                provider.refreshView()
 
 
 def PLUGIN_ENTRY():
