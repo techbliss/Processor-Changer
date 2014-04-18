@@ -5,4 +5,64 @@ from idc import *
 from idaapi import *
 import PyQt4
 from PyQt4 import QtCore, QtGui
-From
+
+class Zadow(idaapi.plugin_t):
+    flags = idaapi.PLUGIN_UNL
+    comment = "This is a comment"
+
+    help = "Processor Changer"
+    wanted_name = "Processor Changer"
+    wanted_hotkey = "Alt-F4"
+
+    def init(self):
+        idaapi.msg("Process Plugin is found. \n")
+        return idaapi.PLUGIN_OK
+
+    def run(self, arg):
+        idaapi.msg("run() called with %d!\n" % arg)
+
+    def term(self):
+        idaapi.msg("")
+    
+    def AddMenuElements(self):
+        '''Menus are better than no GUI at all *sigh*'''
+
+        idaapi.add_menu_item("Debugger/", "Change Processor to SPU", "", 0, self.ZadowSpu, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PPC", "", 0, self.ZadowPpc, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PPC64", "", 0, self.ZadowPpc64, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to Arm", "", 0, self.ZadowArm, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowPc, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to java", "", 0, self.ZadowJava, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowMips, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowPc, ())
+
+    def run(self, arg = 0):
+        idaapi.msg("Hombre you are runnig good.\n")
+
+        self.AddMenuElements()
+
+    def ZadowSpu(self):
+        idc.SetProcessorType('spu', SETPROC_USER)
+
+    def ZadowPpc(self):
+        idc.SetProcessorType('ppc', SETPROC_USER)
+
+    def ZadowPpc64(self):
+        idc.SetProcessorType('ppc64', SETPROC_USER)
+
+    def ZadowArm(self):
+        idc.SetProcessorType('arm', SETPROC_USER)
+
+    def ZadowPc(self):
+        idc.SetProcessorType('pc', SETPROC_USER)
+
+    def ZadowJava(self):
+        idc.SetProcessorType('java', SETPROC_USER)
+
+    def ZadowJava(self):
+        idc.SetProcessorType('mips', SETPROC_USER)
+
+
+
+def PLUGIN_ENTRY():
+    return Zadow()
