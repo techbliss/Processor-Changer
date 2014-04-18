@@ -34,8 +34,8 @@ class Zadow(idaapi.plugin_t):
         idaapi.add_menu_item("Debugger/", "Change Processor to Arm", "", 0, self.ZadowArm, ())
         idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowPc, ())
         idaapi.add_menu_item("Debugger/", "Change Processor to java", "", 0, self.ZadowJava, ())
-        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowMips, ())
-        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowHigh, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to Mips", "", 0, self.ZadowMips, ())
+        idaapi.add_menu_item("Debugger/", "HighLight Calls", "", 0, self.ZadowHigh, ())
 
     def run(self, arg = 0):
         idaapi.msg("Hombre you are runnig good.\n")
@@ -60,7 +60,7 @@ class Zadow(idaapi.plugin_t):
     def ZadowJava(self):
         idc.SetProcessorType('java', SETPROC_USER)
 
-    def ZadowJava(self):
+    def ZadowMips(self):
         idc.SetProcessorType('mips', SETPROC_USER)
 
     def ZadowHigh(self):
