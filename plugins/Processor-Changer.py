@@ -5,6 +5,7 @@ from idc import *
 from idaapi import *
 import PyQt4
 from PyQt4 import QtCore, QtGui
+import idautils
 
 class Zadow(idaapi.plugin_t):
     flags = idaapi.PLUGIN_UNL
