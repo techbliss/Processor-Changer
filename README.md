@@ -1,5 +1,10 @@
 Processor-Changer
 =================
 
-Tool to change processor inside ida
-No need to Reopen ida
+"Tool to change processor inside ida \n"
+
+"No need to Reopen ida \n"
+
+HotKey is Alt+F7
+
+
