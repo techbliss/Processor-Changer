@@ -12,7 +12,7 @@ class Zadow(idaapi.plugin_t):
 
     help = "Processor Changer"
     wanted_name = "Processor Changer"
-    wanted_hotkey = "Alt-F4"
+    wanted_hotkey = "Alt-F7"
 
     def init(self):
         idaapi.msg("Process Plugin is found. \n")
