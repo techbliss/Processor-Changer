@@ -65,7 +65,7 @@ class Zadow(idaapi.plugin_t):
     def ZadowMips(self):
         idc.SetProcessorType('mips', SETPROC_USER)
 
-    def ZadowMips(self):
+    def ZadowNet(self):
         idc.SetProcessorType('cli', SETPROC_USER)
 
     def ZadowHigh(self):
