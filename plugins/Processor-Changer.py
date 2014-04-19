@@ -59,7 +59,7 @@ class Zadow(idaapi.plugin_t):
         idc.SetProcessorType('arm', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowPc(self):
-        idc.SetProcessorType('pc', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
+        idc.SetProcessorType('metapc', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
 
     def ZadowJava(self):
         idc.SetProcessorType('java', SETPROC_USER), rebase_program(0x1,  MSF_FIXONCE)
