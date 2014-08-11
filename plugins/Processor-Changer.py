@@ -1,21 +1,22 @@
-import subprocess
+import re
 import idaapi
 import idc
 from idc import *
 from idaapi import *
+import PyQt4
+from PyQt4 import QtCore, QtGui
+import idautils
 
-
-
-class Gullasch(idaapi.plugin_t):
+class Zadow(idaapi.plugin_t):
     flags = idaapi.PLUGIN_UNL
     comment = "This is a comment"
 
-    help = "Windbg helper"
-    wanted_name = "Windbg helper"
-    wanted_hotkey = "Alt-F6"
+    help = "Processor Changer"
+    wanted_name = "Processor Changer"
+    wanted_hotkey = "Alt-F7"
 
     def init(self):
-        idaapi.msg("windbg helper is found Plugin is found. \n")
+        idaapi.msg("Process Plugin is found. \n")
         return idaapi.PLUGIN_OK
 
     def run(self, arg):
@@ -23,28 +24,75 @@ class Gullasch(idaapi.plugin_t):
 
     def term(self):
         idaapi.msg("")
-
+    
     def AddMenuElements(self):
-        idaapi.add_menu_item("Help/", "WinDbg helper", "", 0, self.Chop, ())
-        idaapi.add_menu_item("Help/", "OpCodes", "", 0, self.Onion, ())
+        '''Menus are better than no GUI at all *sigh*'''
+
+        idaapi.add_menu_item("Debugger/", "Change Processor to SPU", "", 0, self.ZadowSpu, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PPC", "", 0, self.ZadowPpc, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PPC64", "", 0, self.ZadowPpc64, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to Arm", "", 0, self.ZadowArm, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to PC", "", 0, self.ZadowPc, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to java", "", 0, self.ZadowJava, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to Mips", "", 0, self.ZadowMips, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to Net", "", 0, self.ZadowNet, ())
+        idaapi.add_menu_item("Debugger/", "Change Processor to Dalvik", "", 0, self.ZadowDalvik, ())
+        idaapi.add_menu_item("Debugger/", "HighLight Calls", "", 0, self.ZadowHigh, ())
+
+
 
     def run(self, arg = 0):
-        idaapi.msg("helper found.\n")
+        idaapi.msg("Hombre you are runnig good.\n")
 
         self.AddMenuElements()
 
-    def Chop(self):
-        import os
-        import subprocess
-        import sys
-        subprocess.Popen(os.path.join(os.path.expanduser('~'), os.path.expandvars('%IDADIR%'),
-    'debugger.chm'), shell=True)
+    def ZadowSpu(self):
+        idc.SetProcessorType('spu', SETPROC_USER)
 
-    def Onion(self):
-        subprocess.Popen(os.path.join(os.path.expanduser('~'), os.path.expandvars('%IDADIR%'),
-    'opcodes.chm'), shell=True)
+    def ZadowPpc(self):
+        idc.SetProcessorType('ppc', SETPROC_USER)
+
+    def ZadowPpc64(self):
+        idc.SetProcessorType('ppc64', SETPROC_USER)
+
+    def ZadowArm(self):
+        idc.SetProcessorType('arm', SETPROC_USER)
+    def ZadowPc(self):
+        idc.SetProcessorType('metapc', SETPROC_USER), idaapi.load_and_run_plugin("hexrays.plw", 0)
+
+    def ZadowJava(self):
+        idc.SetProcessorType('java', SETPROC_USER)
+
+    def ZadowMips(self):
+        idc.SetProcessorType('mips', SETPROC_USER)
+
+    def ZadowNet(self):
+        idc.SetProcessorType('cli', SETPROC_USER)
+
+    def ZadowDalvik(self):
+        idc.SetProcessorType('dalvik', SETPROC_USER)
+
+    def ZadowHigh(self):
+        from idautils import XrefsFrom
+        from idaapi import fl_CN as call_near, fl_CF as call_far
+        from providers import ida
+
+        provider = ida.IDA()
+
+        startEA = provider.funcStart(provider.currentEA())
+        endEA = provider.funcEnd(provider.currentEA())
+
+        all_addresses = list(provider.iterInstructions(startEA, endEA))
+        all_addresses.extend(provider.iterFuncChunks(startEA))
+        all_addresses = list(set(all_addresses))
+
+        for head in all_addresses:
+            for xref in XrefsFrom(head):
+                if xref.type == call_near or xref.type == call_far:
+                    provider.setColor(head, 0x0000FF)
+
+                provider.refreshView()
 
 
 def PLUGIN_ENTRY():
-    return Gullasch()
-
+    return Zadow()
