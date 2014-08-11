@@ -47,3 +47,4 @@ class Gullasch(idaapi.plugin_t):
 
 def PLUGIN_ENTRY():
     return Gullasch()
+
